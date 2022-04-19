@@ -53,8 +53,12 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmd, int nShow)
     file = CreateFile(L"\\Storage Card\\version.txt", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (file == INVALID_HANDLE_VALUE)
     {
-        MessageBox(NULL, L"Failed to create \\Storage Card\\version.txt", L"(X_X) < OMG", MB_ICONWARNING);
-        return 1;
+        file = CreateFile(L"\\NAND3\\version.txt", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+        if (file == INVALID_HANDLE_VALUE)
+        {
+            MessageBox(NULL, L"Failed to create \\Storage Card\\version.txt and \\NAND3\\version.txt", L"(X_X) < OMG", MB_ICONWARNING);
+            return 1;
+        }
     }
 
     if (!WriteFile(file, buf, fileSize, NULL, NULL))
